@@ -18,6 +18,8 @@ class EditBar(Frame):
         self.filter_button = Button(self, text="Filter")
         self.adjust_button = Button(self, text="Adjust")
         self.clear_button = Button(self, text="Clear")
+        self.rotate_button = Button(self, text="Rotate")
+
 
         self.new_button.bind("<ButtonRelease>", self.new_button_released)
         self.save_button.bind("<ButtonRelease>", self.save_button_released)
@@ -27,6 +29,7 @@ class EditBar(Frame):
         self.filter_button.bind("<ButtonRelease>", self.filter_button_released)
         self.adjust_button.bind("<ButtonRelease>", self.adjust_button_released)
         self.clear_button.bind("<ButtonRelease>", self.clear_button_released)
+        self.rotate_button.bind("<ButtonRelease>", self.rotate_button_released)
 
         self.new_button.pack(side=LEFT)
         self.save_button.pack(side=LEFT)
@@ -35,6 +38,7 @@ class EditBar(Frame):
         self.crop_button.pack(side=LEFT)
         self.filter_button.pack(side=LEFT)
         self.adjust_button.pack(side=LEFT)
+        self.rotate_button.pack(side=LEFT)
         self.clear_button.pack()
 
     def new_button_released(self, event):
@@ -135,3 +139,5 @@ class EditBar(Frame):
 
                 self.master.processed_image = self.master.original_image.copy()
                 self.master.image_viewer.show_image()
+    def rotate_button_released(self,event):
+        pass
