@@ -1,24 +1,25 @@
 from tkinter import Toplevel, Button, RIGHT
 import numpy as np
 import cv2
+import tkinter as tk
 
 
 class FilterFrame(Toplevel):
 
     def __init__(self, master=None):
-        Toplevel.__init__(self, master=master)
+        Toplevel.__init__(self, master=master, padx=10, pady=10, bg='#006666')
 
         self.original_image = self.master.processed_image
         self.filtered_image = None
 
-        self.negative_button = Button(master=self, text="Negative")
-        self.black_white_button = Button(master=self, text="Black White")
-        self.sepia_button = Button(master=self, text="Sepia")
-        self.emboss_button = Button(master=self, text="Emboss")
-        self.gaussian_blur_button = Button(master=self, text="Gaussian Blur")
-        self.median_blur_button = Button(master=self, text="Median Blur")
-        self.cancel_button = Button(master=self, text="Cancel")
-        self.apply_button = Button(master=self, text="Apply")
+        self.negative_button = tk.Button(master=self, text="Negative", width=10, background='#005c99')
+        self.black_white_button = tk.Button(master=self, text="Black White", width=10, background='#005c99')
+        self.sepia_button = tk.Button(master=self, text="Sepia", width=10, background='#005c99')
+        self.emboss_button = tk.Button(master=self, text="Emboss", width=10, background='#005c99')
+        self.gaussian_blur_button = tk.Button(master=self, text="Gaussian Blur", width=10, background='#005c99')
+        self.median_blur_button = tk.Button(master=self, text="Median Blur", width=10, background='#005c99')
+        self.cancel_button = tk.Button(master=self, text="Cancel", width=10, background='RED')
+        self.apply_button = tk.Button(master=self, text="Apply", width=10, background='#005c99')
 
         self.negative_button.bind("<ButtonRelease>", self.negative_button_released)
         self.black_white_button.bind("<ButtonRelease>", self.black_white_released)
@@ -29,14 +30,14 @@ class FilterFrame(Toplevel):
         self.apply_button.bind("<ButtonRelease>", self.apply_button_released)
         self.cancel_button.bind("<ButtonRelease>", self.cancel_button_released)
 
-        self.negative_button.pack()
-        self.black_white_button.pack()
-        self.sepia_button.pack()
-        self.emboss_button.pack()
-        self.gaussian_blur_button.pack()
-        self.median_blur_button.pack()
+        self.negative_button.pack(pady=5, padx=5)
+        self.black_white_button.pack(pady=5, padx=5)
+        self.sepia_button.pack(pady=5, padx=5)
+        self.emboss_button.pack(pady=5, padx=5)
+        self.gaussian_blur_button.pack(pady=5, padx=5)
+        self.median_blur_button.pack(pady=5, padx=5)
         self.cancel_button.pack(side=RIGHT)
-        self.apply_button.pack()
+        self.apply_button.pack(pady=5, padx=5)
 
     def negative_button_released(self, event):
         self.negative()

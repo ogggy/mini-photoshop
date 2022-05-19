@@ -1,13 +1,29 @@
-from tkinter import Frame, Canvas, CENTER, ROUND
+from cgitb import text
+from logging import PlaceHolder
+from sqlite3 import Row
+from sys import maxsize
+from textwrap import fill
+from tkinter import BOTTOM, END, LEFT, RIGHT, TOP, Entry, Frame, Canvas, CENTER, ROUND, Label, ttk
+from turtle import width
+import warnings
 from PIL import Image, ImageTk
 import cv2
+import tkinter as tk
+
+from auto_scrollbar import AutoScrollbar
+
+
+# from zoom_demo import AutoScrollbar, CanvasImage, MainWindow
+
+
 
 
 class ImageViewer(Frame):
 
     def __init__(self, master=None):
-        Frame.__init__(self, master=master, bg="gray", width=600, height=400)
+        Frame.__init__(self, master=master, bg="gray", width=1000, height=1000)
 
+        
         self.shown_image = None
         self.x = 0
         self.y = 0
@@ -19,8 +35,13 @@ class ImageViewer(Frame):
         self.rectangle_id = 0
         self.ratio = 0
 
-        self.canvas = Canvas(self, bg="gray", width=600, height=400)
+        self.canvas = Canvas(self, bg="gray", width=900, height=900)
         self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+        
+        # self.hbar = AutoScrollbar(self, orient='horizontal')
+        # self.vbar = AutoScrollbar(self, orient='vertical')
+
+        # self.hbar.place(in_)
 
     def show_image(self, img=None):
         self.clear_canvas()
@@ -32,6 +53,7 @@ class ImageViewer(Frame):
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         height, width, channels = image.shape
+        
         ratio = height / width
 
         new_width = width
@@ -50,8 +72,67 @@ class ImageViewer(Frame):
 
         self.ratio = height / new_height
 
+
         self.canvas.config(width=new_width, height=new_height)
         self.canvas.create_image(new_width / 2, new_height / 2, anchor=CENTER, image=self.shown_image)
+        # self.canvas.grid(row=0,column=0,sticky='nswe',columnspan=2)
+        # self.canvas.bind("<B1-Motion>", self.drag)
+        # self.canvas.update()
+        self.set_text(self.master.editbar.width_text_field, str(new_width))
+        self.set_text(self.master.editbar.height_text_field, str(new_height))
+
+    def set_text(self, entry, text):
+        entry.delete(0,"end")
+        entry.insert(0, text)
+        return
+    # def show_image(self, path, img=None):
+    #     ttk.Frame.__init__(self, master=self)
+    #     canvas_frame_img = CanvasImage(self, path)
+    #     # canvas_frame_img.__imframe.config
+    #     canvas_frame_img.grid(row=0, column=1)
+    #     # canvas_frame_img.place(anchor=CENTER)
+    #     # canvas_frame_img.place(width=900, height=900)
+    #     # CanvasImage.__init__(self.master, self, path)
+      
+    def drag(self, event):
+        event.widget.place(x=event.x_root, y=event.y_root,anchor=CENTER)
+
+    def show_image_2(self, img=None):
+        self.clear_canvas()
+
+        if img is None:
+            image = self.master.processed_image.copy()
+        else:
+            image = img
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        height, width, channels = image.shape
+        
+        ratio = height / width
+
+        new_width = width
+        new_height = height
+
+        # if height > self.winfo_height() or width > self.winfo_width():
+        #     if ratio < 1:
+        #         new_width = self.winfo_width()
+        #         new_height = int(new_width * ratio)
+        #     else:
+        #         new_height = self.winfo_height()
+        #         new_width = int(new_height * (width / height))
+
+        self.shown_image = cv2.resize(image, (new_width, new_height))
+        self.shown_image = ImageTk.PhotoImage(Image.fromarray(self.shown_image))
+
+        self.ratio = height / new_height
+
+        self.canvas.config(width=new_width, height=new_height)
+        self.canvas.create_image(new_width / 2, new_height / 2, anchor=CENTER, image=self.shown_image)
+        # self.canvas.bind("<B1-Motion>", self.drag)
+
+       
+        self.set_text(self.master.editbar.width_text_field, str(new_width))
+        self.set_text(self.master.editbar.height_text_field, str(new_height))
 
     def activate_draw(self):
         self.canvas.bind("<ButtonPress>", self.start_draw)

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import LEFT, ttk
-from editBar import EditBar
-from imageViewer import ImageViewer
+from edit_bar import EditBar
+from image_view import ImageViewer
 
 
 class Main(tk.Tk):
@@ -19,12 +19,18 @@ class Main(tk.Tk):
         self.filter_frame = None
         self.adjust_frame = None
 
+        
+        
+
+
         self.title("Image Editor")
-
+        # self.attributes('-fullscreen', True)
         self.editbar = EditBar(master=self)
-        separator1 = ttk.Separator(master=self, orient=tk.VERTICAL)
+        # separator1 = ttk.Separator(master=self, orient=tk.VERTICAL)
         self.image_viewer = ImageViewer(master=self)
-
+       
         self.editbar.pack(pady=10, side=LEFT)
-        separator1.pack(fill=tk.X, padx=20, pady=5)
+        # separator1.pack(fill=tk.X, padx=20, pady=5)
         self.image_viewer.pack(fill=tk.BOTH, padx=20, pady=10, expand=2)
+        self.config(bg='#003333')
+       

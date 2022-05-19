@@ -5,7 +5,7 @@ import cv2
 class AdjustFrame(Toplevel):
 
     def __init__(self, master=None):
-        Toplevel.__init__(self, master=master)
+        Toplevel.__init__(self, master=master, bg='#006666')
 
         self.brightness_value = 0
         self.previous_brightness_value = 0
@@ -15,19 +15,19 @@ class AdjustFrame(Toplevel):
 
         self.brightness_label = Label(self, text="Brightness")
         self.brightness_scale = Scale(self, from_=0, to_=2, length=250, resolution=0.1,
-                                      orient=HORIZONTAL)
+                                      orient=HORIZONTAL, bg='#006666', fg='#006666')
         self.r_label = Label(self, text="R")
         self.r_scale = Scale(self, from_=-100, to_=100, length=250, resolution=1,
-                             orient=HORIZONTAL)
+                             orient=HORIZONTAL, bg='RED', fg='#006666')
         self.g_label = Label(self, text="G")
         self.g_scale = Scale(self, from_=-100, to_=100, length=250, resolution=1,
-                             orient=HORIZONTAL)
+                             orient=HORIZONTAL, bg='GREEN', fg='#006666')
         self.b_label = Label(self, text="B")
         self.b_scale = Scale(self, from_=-100, to_=100, length=250, resolution=1,
-                             orient=HORIZONTAL)
-        self.apply_button = Button(self, text="Apply")
-        self.preview_button = Button(self, text="Preview")
-        self.cancel_button = Button(self, text="Cancel")
+                             orient=HORIZONTAL, bg='BLUE', fg='#006666')
+        self.apply_button = Button(self, text="Apply", background='#005c99')
+        self.preview_button = Button(self, text="Preview", background='#005c99')
+        self.cancel_button = Button(self, text="Cancel", background='RED')
 
         self.brightness_scale.set(1)
 
@@ -43,9 +43,9 @@ class AdjustFrame(Toplevel):
         self.g_scale.pack()
         self.b_label.pack()
         self.b_scale.pack()
-        self.cancel_button.pack(side=RIGHT)
-        self.preview_button.pack(side=RIGHT)
-        self.apply_button.pack()
+        self.cancel_button.pack(side=RIGHT, pady=5, padx=5)
+        self.preview_button.pack(side=RIGHT, pady=5, padx=5)
+        self.apply_button.pack(pady=5, padx=5)
 
     def apply_button_released(self, event):
         self.master.processed_image = self.processing_image
